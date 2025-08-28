@@ -1,18 +1,25 @@
-# app/main.py
-import tempfile
-from typing import List
-from fastapi import FastAPI, UploadFile, File, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from datetime import datetime
-from ..app.core import logique
-from .database import get_db, engine
-from . import schemas
-from . import models
-
-
-models.Base.metadata.create_all(bind=engine) # crée la table dans la base si elle n'existe pas sinon elle va juste la loader
-
-app = FastAPI(title="LexiTrack API")
+from fastapi import FastAPI
+from .routers import summary, user, auth
+from fastapi.middleware.cors import CORSMiddleware
 
 
 
+app = FastAPI()
+
+
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get('/')
+def root():
+    return {"message": "Welcome on my api!!!!"}
+
+app.include_router(summary.router)
+app.include_router(user.router)
+app.include_router(auth.router)

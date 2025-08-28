@@ -3,7 +3,7 @@ import json
 from .. import config
 from .Reader import WebReader, PDFReader
 
-settings = config.get_settings()
+settings = config.settings
 
 
 class AIAssistant:

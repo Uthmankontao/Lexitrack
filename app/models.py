@@ -2,7 +2,8 @@ from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, JSON
 from sqlalchemy.sql.expression import text
 from .database import Base
 from datetime import datetime
-
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
 
 
 class Summary(Base):
@@ -15,7 +16,8 @@ class Summary(Base):
     questions = Column(JSON, nullable=False)          # Liste Q/R
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
     updated_at = Column(TIMESTAMP(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-
+    owner_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    owner = relationship("User")
 
 
 class User(Base):
@@ -25,4 +27,3 @@ class User(Base):
     email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
-    phone_number = Column(String, nullable=False)
