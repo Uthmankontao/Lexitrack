@@ -109,7 +109,7 @@ def summarize_pdf_url(pdf_url: schemas.URL,
 			tmp.write(response.content)
 			tmp_path = tmp.name
 
-		payload = processor.process_from_pdf(tmp_path, db_session=db)
+		payload = processor.process_from_pdf(tmp_path)
 
 		if isinstance(payload, dict) and "error" in payload:
 			raise HTTPException(status_code=400, detail=payload["error"])
