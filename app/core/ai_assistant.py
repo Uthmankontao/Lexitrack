@@ -84,10 +84,38 @@ class AIAssistant:
             return json.dumps({"error": f"Impossible de charger l'URL : {e}"})
 
         prompt = (
-            f"Voici le contenu d'une page web :\n\n{reader}\n\n"
-            "(Si ça ressemble à un cours pour étudiant alors resume le cours en detaillant toutes les parties du cours. Prends ton pour bien faire et si c'est un article Fais un résumé bien détaillé, génère aussi une liste de questions pertinentes) "
-            "au format JSON {'title':'...','summary':{'short':'...','detailed':'...'},'questions':[{'question':'...','answer':''}]}"
-        )
+            # f"Voici le contenu d'une page web :\n\n{reader}\n\n"
+            # "(Si ça ressemble à un cours pour étudiant alors resume le cours en detaillant toutes les parties du cours. Prends ton pour bien faire et si c'est un article Fais un résumé bien détaillé, génère aussi une liste de questions pertinentes) "
+            # "au format JSON {'title':'...','summary':{'short':'...','detailed':'...'},'questions':[{'question':'...','answer':''}]}"
+            """Tu es un assistant pédagogique spécialisé dans la synthèse et l’enseignement. Tu vas transformer le texte fourni en un **résumé détaillé et structuré** pour un étudiant. Ne te contente pas de reformuler le texte : fais ressortir **les concepts clés, définitions, processus, exemples et relations importantes**.  
+
+                Ensuite, génère une liste de **questions pertinentes** qui permettent de tester la compréhension du texte. Pour chaque question, fournis **une réponse complète et claire**, comme un corrigé détaillé pour un étudiant.  
+
+                Le format de sortie doit être strictement **JSON valide** avec cette structure : 
+                {
+                "title": "Titre synthétique du contenu",
+                "summary": {
+                    "short": "Résumé condensé mais compréhensible",
+                    "detailed": "Résumé détaillé, explicatif, organisé en sections, avec exemples et parties essentielles"
+                },
+                "questions": [
+                    {
+                    "question": "Question pertinente sur le contenu",
+                    "answer": "Réponse complète et claire"
+                    }
+                ]
+                }
+
+                Instructions supplémentaires :  
+                - Si le texte est en anglais, résume-le en français.  
+                - Organise le résumé détaillé par sections ou thèmes si le contenu est long.  
+                - Utilise un langage pédagogique, clair et précis.  
+                - Ne réponds **qu’en JSON**, aucun texte supplémentaire hors du JSON.  
+                - Si certaines informations sont essentielles pour comprendre le sujet, mets-les en évidence."""
+
+                f"Voici le texte à résumer :{reader}"
+)
+
         return self._ask_ai(prompt)
 
     def summarize_pdf(self, file_path: str):
