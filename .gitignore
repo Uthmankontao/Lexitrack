@@ -4,4 +4,7 @@ __pycache__/
 versions/
 frontend/
 logique.py
-
+summary.py
+user.py
+auth.py
+ai_assistant.py
