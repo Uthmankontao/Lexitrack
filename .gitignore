@@ -3,9 +3,5 @@
 __pycache__/
 versions/
 frontend/
-./lexitrack-backend/app/core/ai_assistant.py
-./lexitrack-backend/app/core/logique.py
-./lexitrack-backend/app/routers/auth.py
-./lexitrack-backend/app/routers/summary.py
-./lexitrack-backend/app/routers/user.py
+logique.py
 
